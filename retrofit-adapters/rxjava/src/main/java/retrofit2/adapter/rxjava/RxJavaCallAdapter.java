@@ -16,6 +16,7 @@
 package retrofit2.adapter.rxjava;
 
 import java.lang.reflect.Type;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
@@ -62,6 +63,7 @@ final class RxJavaCallAdapter<R> implements CallAdapter<R, Object> {
       func = callFunc;
     }
     Observable<?> observable = Observable.create(func);
+    observable = observable.timeout(6, TimeUnit.SECONDS);
 
     if (scheduler != null) {
       observable = observable.subscribeOn(scheduler);
